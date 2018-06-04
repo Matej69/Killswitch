@@ -6,6 +6,7 @@
 #include <GLFW/glfw3.h>
 #include "core\ShaderLoader\ShaderLoader.h"
 #include "core\Sprite\Sprite.h"
+#include "core\Texture\Texture.h"
 
 
 
@@ -32,10 +33,15 @@ int main(void)
 	if (glewInit() != GLEW_OK)
 		std::cout << "GLEW INIT ERROR";
 
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	glEnableVertexAttribArray(0);
 	Sprite sprite = Sprite(0.1f, 0.1f, 0.5f, 0.5f);
-	Sprite sprite2 = Sprite(-0.3f, -0.3f, -0.3f, -0.3f);
+	Sprite sprite2 = Sprite(0.3f, 0.3f, -0.3f, -0.3f);
+
+	string path = "res/textures/larvitar.png";
+	Texture texture(path);
+	texture.Bind(0);
 
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))

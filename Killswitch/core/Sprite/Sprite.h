@@ -2,6 +2,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include "..\ShaderLoader\ShaderLoader.h"
+#include <string>
 
 class Sprite
 {
@@ -11,7 +12,7 @@ public:
 	int layer;
 private:
 	unsigned int vertexDataBuffer, indexBuffer;
-	float vertexData[8];
+	float vertexData[16];
 	static unsigned int indexData[6];
 	unsigned int shader;
 

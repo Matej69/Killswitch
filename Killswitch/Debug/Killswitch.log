@@ -1,2 +1,10 @@
-﻿  App.cpp
+﻿  Texture.cpp
+  stb_image.cpp
+  Sprite.cpp
+  ShaderLoader.cpp
+  App.cpp
+  Generating Code...
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
+glew32s.lib(glew.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'glew32s.lib(glew.obj)' or at 'X:\Projekti\Killswitch\Debug\vc120.pdb'; linking object as if no debug info
   Killswitch.vcxproj -> X:\Projekti\Killswitch\Debug\Killswitch.exe

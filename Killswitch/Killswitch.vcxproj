@@ -128,6 +128,8 @@
     <ClCompile Include="App.cpp" />
     <ClCompile Include="core\ShaderLoader\ShaderLoader.cpp" />
     <ClCompile Include="core\Sprite\Sprite.cpp" />
+    <ClCompile Include="core\stbImage\stb_image.cpp" />
+    <ClCompile Include="core\Texture\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\basic.shader" />
@@ -135,6 +137,11 @@
   <ItemGroup>
     <ClInclude Include="core\ShaderLoader\ShaderLoader.h" />
     <ClInclude Include="core\Sprite\Sprite.h" />
+    <ClInclude Include="core\stbImage\stb_image.h" />
+    <ClInclude Include="core\Texture\Texture.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\textures\larvitar.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
