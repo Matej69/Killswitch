@@ -4,9 +4,9 @@
 #include "..\stbImage\stb_image.h"
 
 
-Texture::Texture(string &path)
+Texture::Texture(std::string &path)
 {
-	string extension = path.substr(path.length() - 3);
+	std::string extension = path.substr(path.length() - 3);
 
 	// generate opengl texture
 	glGenTextures(1, &textureID);
@@ -19,7 +19,7 @@ Texture::Texture(string &path)
 
 	// Load image data into buffer
 	stbi_set_flip_vertically_on_load(1);
-	int w = 100; int h = 100; 
+	int w = 100; int h = 100;
 	int numOfChannels = (extension == "png") ? 4 : 3;
 	textureBuffer = stbi_load(path.c_str(), &w, &h, &numOfChannels, numOfChannels);
 
@@ -28,7 +28,7 @@ Texture::Texture(string &path)
 	int format = (extension == "png") ? GL_RGB : GL_RGB;
 	if(extension == "jpg")
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_RGB, GL_UNSIGNED_BYTE, textureBuffer);
-	if (extension == "png")
+	else if (extension == "png")
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, textureBuffer);
 
 	// free image data if image was loaded
@@ -42,11 +42,16 @@ Texture::Texture(string &path)
 	}
 }
 
+Texture::Texture()
+{
+}
+
 
 Texture::~Texture()
 {
 	glDeleteTextures(1, &textureID);
 }
+
 
 void Texture::Bind(unsigned int slot)
 {

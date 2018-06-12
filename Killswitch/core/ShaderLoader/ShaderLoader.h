@@ -4,7 +4,9 @@
 #include <fstream>
 #include <string>
 
-
+/**
+* ShaderSources holds value for vertex and fragment shader source
+*/
 struct ShaderSources
 {
 	std::string vertex;
