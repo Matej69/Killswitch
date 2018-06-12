@@ -36,12 +36,9 @@ int main(void)
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	Sprite sprite = Sprite(0.1f, 0.1f, 0.5f, 0.5f);
-	Sprite sprite2 = Sprite(0.3f, 0.3f, -0.3f, -0.3f);
+	Sprite sprite = Sprite(0.1f, 0.1f, 0.5f, 0.5f, "res/textures/larvitar.png");
+	Sprite sprite2 = Sprite(2.0f, 2.0f, 0.0f, 0.0f, "res/textures/larvitar.png");
 
-	string path = "res/textures/larvitar.png";
-	Texture texture(path);
-	texture.Bind(0);
 
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
