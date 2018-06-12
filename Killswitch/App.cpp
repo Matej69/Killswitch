@@ -37,20 +37,24 @@ int main(void)
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	Sprite sprite = Sprite(0.1f, 0.1f, 0.5f, 0.5f);
-	Sprite sprite2 = Sprite(0.3f, 0.3f, -0.3f, -0.3f);
+	Sprite sprite2 = Sprite(0.9f, 0.9f, -0.3f, -0.3f);
 
 	string path = "res/textures/larvitar.png";
 	Texture texture(path);
-	texture.Bind(0);
+	string path2 = "res/textures/larvitar.jpg";
+	Texture texture2(path2);
+	//path = "res/textures/larvitar.jpg";
+	//Texture texture2(path);
 
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
 	{
 		/* Render here */
 		glClear(GL_COLOR_BUFFER_BIT);
-
+		texture.Bind(0);
 		sprite.SetPosition(sprite.x + 0.0001f, sprite.y);
 		sprite.Render();
+		texture2.Bind(0);
 		sprite2.Render();
 
 		/* Swap front and back buffers */
