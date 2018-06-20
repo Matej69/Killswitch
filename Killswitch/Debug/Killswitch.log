@@ -1,4 +1,5 @@
-﻿  Texture.cpp
+﻿  GameClock.cpp
+  Texture.cpp
   stb_image.cpp
   Sprite.cpp
   ShaderLoader.cpp
