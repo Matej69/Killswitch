@@ -7,13 +7,12 @@
 #include "core\ShaderLoader\ShaderLoader.h"
 #include "core\Sprite\Sprite.h"
 #include "core\Texture\Texture.h"
+#include "core\GameClock\GameClock.h"
 
-
-
+using namespace std;
 int main(void)
 {
 	GLFWwindow* window;
-
 	/* Initialize the library */
 	if (!glfwInit())
 		return -1;
@@ -43,6 +42,8 @@ int main(void)
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
 	{
+		GameClock::OnFrameStart();
+
 		/* Render here */
 		glClear(GL_COLOR_BUFFER_BIT);
 
@@ -55,6 +56,10 @@ int main(void)
 
 		/* Poll for and process events */
 		glfwPollEvents();
+
+		GameClock::OnFrameEnd();
+		cout << GameClock::fps << endl;
+		cout << GameClock::deltaTime << endl;
 	}
 
 	glfwTerminate();
