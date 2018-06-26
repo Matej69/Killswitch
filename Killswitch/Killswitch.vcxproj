@@ -126,6 +126,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
+    <ClCompile Include="core\imGUI\imgui.cpp" />
+    <ClCompile Include="core\imGUI\imgui_demo.cpp" />
+    <ClCompile Include="core\imGUI\imgui_draw.cpp" />
+    <ClCompile Include="core\imGUI\imgui_impl_glfw_gl3.cpp" />
     <ClCompile Include="core\ShaderLoader\ShaderLoader.cpp" />
     <ClCompile Include="core\Sprite\Sprite.cpp" />
     <ClCompile Include="core\stbImage\stb_image.cpp" />
@@ -136,6 +140,13 @@
     <None Include="res\shaders\basic.shader" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="core\imGUI\imconfig.h" />
+    <ClInclude Include="core\imGUI\imgui.h" />
+    <ClInclude Include="core\imGUI\imgui_impl_glfw_gl3.h" />
+    <ClInclude Include="core\imGUI\imgui_internal.h" />
+    <ClInclude Include="core\imGUI\stb_rect_pack.h" />
+    <ClInclude Include="core\imGUI\stb_textedit.h" />
+    <ClInclude Include="core\imGUI\stb_truetype.h" />
     <ClInclude Include="core\ShaderLoader\ShaderLoader.h" />
     <ClInclude Include="core\Sprite\Sprite.h" />
     <ClInclude Include="core\stbImage\stb_image.h" />

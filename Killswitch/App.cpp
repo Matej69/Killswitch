@@ -8,6 +8,9 @@
 #include "core\Sprite\Sprite.h"
 #include "core\Texture\Texture.h"
 #include "core\GameClock\GameClock.h"
+#include "core\imGUI\imgui.h"
+#include "core\imGUI\imgui_impl_glfw_gl3.h"
+
 
 using namespace std;
 int main(void)
@@ -32,6 +35,11 @@ int main(void)
 	if (glewInit() != GLEW_OK)
 		std::cout << "GLEW INIT ERROR";
 
+	// Setup ImGui
+	ImGui::CreateContext();
+	ImGui_ImplGlfwGL3_Init(window, true);
+	ImGui::StyleColorsDark();
+
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -43,6 +51,8 @@ int main(void)
 	while (!glfwWindowShouldClose(window))
 	{
 		GameClock::OnFrameStart();
+		// imGUI stuf called at atart of every frame
+		ImGui_ImplGlfwGL3_NewFrame();
 
 		/* Render here */
 		glClear(GL_COLOR_BUFFER_BIT);
@@ -51,17 +61,25 @@ int main(void)
 		sprite.Render();
 		sprite2.Render();
 
+
+
+
+
+		// imGUI rendering
+		ImGui::Render();
+		ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);
-
 		/* Poll for and process events */
 		glfwPollEvents();
-
+		// game end frame calculation
 		GameClock::OnFrameEnd();
 		cout << GameClock::fps << endl;
 		cout << GameClock::deltaTime << endl;
 	}
 
+	ImGui_ImplGlfwGL3_Shutdown();
+	ImGui::DestroyContext();
 	glfwTerminate();
 	return 0;
 }
