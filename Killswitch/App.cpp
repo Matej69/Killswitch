@@ -59,15 +59,10 @@ int main(void)
 	Sprite sprite = Sprite(0.1f, 0.1f, 0.5f, 0.5f, "res/textures/larvitar.png");
 	Sprite sprite2 = Sprite(2.0f, 2.0f, 0.0f, 0.0f, "res/textures/larvitar.png");
 
-<<<<<<< Updated upstream
-=======
-	bool show_demo_window = true;
-	bool show_another_window = false;
-	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
 	GUIWindow::CreateWindow("1", 5, 5, 50, 50, MeasurementUnit::PERCENT, window);
-	GUIWindow::CreateWindow("1", 0, 200, 100, 50, MeasurementUnit::PERCENT, window);
->>>>>>> Stashed changes
+	GUIWindow::CreateWindow("2", 0, 200, 100, 50, MeasurementUnit::PERCENT, window);
+
 
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
@@ -83,14 +78,8 @@ int main(void)
 		sprite.Render();
 		sprite2.Render();
 
-<<<<<<< Updated upstream
-
-=======
 		
 		GUIWindow::PutAllInRenderingContainer();
-		
->>>>>>> Stashed changes
-
 
 
 		// imGUI rendering
