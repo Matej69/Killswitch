@@ -10,9 +10,20 @@
 #include "core\GameClock\GameClock.h"
 #include "core\imGUI\imgui.h"
 #include "core\imGUI\imgui_impl_glfw_gl3.h"
-
+#include "core\GUI\GUIWindow.h"
+#include "core\WindowProperties\WindowProperties.h"
 
 using namespace std;
+
+
+
+void window_size_callback(GLFWwindow* window, int w, int h)
+{
+	WindowProperties::SetSize(w, h);
+	GUIWindow::UpdateAllPercentSize();
+}
+
+
 int main(void)
 {
 	GLFWwindow* window;
@@ -22,12 +33,14 @@ int main(void)
 
 
 	/* Create a windowed mode window and its OpenGL context */
-	window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
+	WindowProperties::SetSize(640, 480);
+	window = glfwCreateWindow(WindowProperties::w, WindowProperties::h, "Hello World", NULL, NULL);
 	if (!window)
 	{
 		glfwTerminate();
 		return -1;
 	}
+	glfwSetWindowSizeCallback(window, window_size_callback);
 
 	/* Make the window's context current */
 	glfwMakeContextCurrent(window);
@@ -47,6 +60,10 @@ int main(void)
 	Sprite sprite2 = Sprite(2.0f, 2.0f, 0.0f, 0.0f, "res/textures/larvitar.png");
 
 
+	GUIWindow::CreateWindow("1", 5, 5, 50, 50, MeasurementUnit::PERCENT, window);
+	GUIWindow::CreateWindow("2", 0, 200, 100, 50, MeasurementUnit::PERCENT, window);
+
+
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
 	{
@@ -61,8 +78,8 @@ int main(void)
 		sprite.Render();
 		sprite2.Render();
 
-
-
+		
+		GUIWindow::PutAllInRenderingContainer();
 
 
 		// imGUI rendering
@@ -74,8 +91,8 @@ int main(void)
 		glfwPollEvents();
 		// game end frame calculation
 		GameClock::OnFrameEnd();
-		cout << GameClock::fps << endl;
-		cout << GameClock::deltaTime << endl;
+		//cout << GameClock::fps << endl;
+		//cout << GameClock::deltaTime << endl;
 	}
 
 	ImGui_ImplGlfwGL3_Shutdown();

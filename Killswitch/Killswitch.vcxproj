@@ -135,6 +135,8 @@
     <ClCompile Include="core\stbImage\stb_image.cpp" />
     <ClCompile Include="core\Texture\Texture.cpp" />
     <ClCompile Include="core\GameClock\GameClock.cpp" />
+    <ClCompile Include="core\GUI\GUIWindow.cpp" />
+    <ClCompile Include="core\WindowProperties\WindowProperties.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\basic.shader" />
@@ -152,6 +154,8 @@
     <ClInclude Include="core\stbImage\stb_image.h" />
     <ClInclude Include="core\Texture\Texture.h" />
     <ClInclude Include="core\GameClock\GameClock.h" />
+    <ClInclude Include="core\GUI\GUIWindow.h" />
+    <ClInclude Include="core\WindowProperties\WindowProperties.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\textures\larvitar.png" />

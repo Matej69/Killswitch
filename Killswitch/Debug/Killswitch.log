@@ -1,4 +1,12 @@
-﻿  GameClock.cpp
+﻿  WindowProperties.cpp
+  GUIWindow.cpp
+x:\projekti\killswitch\killswitch\core\gui\guiwindow.cpp(50): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+x:\projekti\killswitch\killswitch\core\gui\guiwindow.cpp(51): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+x:\projekti\killswitch\killswitch\core\gui\guiwindow.cpp(60): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+x:\projekti\killswitch\killswitch\core\gui\guiwindow.cpp(61): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+x:\projekti\killswitch\killswitch\core\gui\guiwindow.cpp(73): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+x:\projekti\killswitch\killswitch\core\gui\guiwindow.cpp(74): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  GameClock.cpp
   Texture.cpp
   stb_image.cpp
   Sprite.cpp
