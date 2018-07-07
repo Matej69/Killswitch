@@ -31,22 +31,25 @@ public:
 	static vector<GUIWindow> guiWindows;
 	static vector<unsigned int> guiWindowIDs;
 private:
-	int x, y, w, h, wPercent, hPercent;
+	int x, y, w, h, wPercent, hPercent, xPercent, yPercent;
 	string name;
-	MeasurementUnit mUnit;
+	MeasurementUnit sizeMUnit;
+	MeasurementUnit posMUnit;
 	GLFWwindow* win;
 
 public:
-	GUIWindow(string name, int x, int y, int w, int h, MeasurementUnit mUnit, GLFWwindow* win);
+	GUIWindow(string name, int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, GLFWwindow* win);
 	~GUIWindow();
-	static void CreateWindow(string name, int x, int y, int w, int h, MeasurementUnit mUnit, GLFWwindow* win);
+	static void CreateWindow(string name, int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, GLFWwindow* win);
 	static void PutAllInRenderingContainer();
-	static void UpdateAllPercentSize();
+	static void UpdateAllPercentProperties();
 
 
 private:
 	void PutInRenderingContainer();
 	void SetSize(int w, int h);
 	void UpdatePercentSize();
+	void SetPos(int x, int y);
+	void UpdatePercentPos();
 };
 

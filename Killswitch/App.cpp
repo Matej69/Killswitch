@@ -20,7 +20,7 @@ using namespace std;
 void window_size_callback(GLFWwindow* window, int w, int h)
 {
 	WindowProperties::SetSize(w, h);
-	GUIWindow::UpdateAllPercentSize();
+	GUIWindow::UpdateAllPercentProperties();
 }
 
 
@@ -60,8 +60,8 @@ int main(void)
 	Sprite sprite2 = Sprite(2.0f, 2.0f, 0.0f, 0.0f, "res/textures/larvitar.png");
 
 
-	GUIWindow::CreateWindow("1", 5, 5, 50, 50, MeasurementUnit::PERCENT, window);
-	GUIWindow::CreateWindow("2", 0, 200, 100, 50, MeasurementUnit::PERCENT, window);
+	GUIWindow::CreateWindow("11", 20, 20, 50, 50, MeasurementUnit::PERCENT, MeasurementUnit::PERCENT, window);
+	GUIWindow::CreateWindow("2", 0, 200, 100, 50, MeasurementUnit::PERCENT, MeasurementUnit::PIXELS, window);
 
 
 	/* Loop until the user closes the window */
