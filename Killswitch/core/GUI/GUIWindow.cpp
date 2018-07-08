@@ -1,8 +1,8 @@
 #include "GUIWindow.h"
 
-vector<GUIWindow> GUIWindow::guiWindows;
-vector<unsigned int> GUIWindow::guiWindowIDs;
-void GUIWindow::CreateWindow(string name, int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, GLFWwindow* win)
+list<GUIWindow> GUIWindow::guiWindows;
+list<unsigned int> GUIWindow::guiWindowIDs;
+GUIWindow* GUIWindow::CreateWindow(string name, int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow* parentGUIWindow)
 {
 	// ASSERT if 2 GUI windows with same ID  exist
 	unsigned int newId = ImHash(name.c_str(), 0);
@@ -11,14 +11,14 @@ void GUIWindow::CreateWindow(string name, int x, int y, int w, int h, Measuremen
 		assert(id != newId && "ASSERT MESSAGE: 2 GUI window with same nameID exists");
 	}
 	GUIWindow::guiWindowIDs.push_back(newId);
-	GUIWindow::guiWindows.push_back(GUIWindow(name, x, y, w, h, sizeMUnit, posMUnit, win));
+	GUIWindow::guiWindows.push_back(GUIWindow(name, x, y, w, h, sizeMUnit, posMUnit, hasParentGUIWindow, parentGUIWindow));
+	return &GUIWindow::guiWindows.back();
 }
 void GUIWindow::PutAllInRenderingContainer()
 {
 	for (GUIWindow &guiWin : GUIWindow::guiWindows)
 	{
 		guiWin.PutInRenderingContainer();
-		cout << guiWin.x << " " << guiWin.y << " " << guiWin.w << " " << guiWin.h << " " << endl;
 	}
 }
 void GUIWindow::UpdateAllPercentProperties()
@@ -34,8 +34,8 @@ void GUIWindow::UpdateAllPercentProperties()
 
 
 
-GUIWindow::GUIWindow(string name, int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, GLFWwindow* win)
-	: x(x), y(y), sizeMUnit(sizeMUnit), posMUnit(posMUnit), win(win), name(name)
+GUIWindow::GUIWindow(string name, int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow* parentGUIWindow)
+	: x(x), y(y), sizeMUnit(sizeMUnit), posMUnit(posMUnit), name(name), hasParentGUIWindow(hasParentGUIWindow), parentGUIWindow(parentGUIWindow)
 {
 	SetSize(w, h);
 	SetPos(x, y);
@@ -52,7 +52,7 @@ void GUIWindow::SetSize(int w, int h)
 {
 	if (this->sizeMUnit == MeasurementUnit::PERCENT)
 	{
-		this->wPercent = w;
+		this->wPercent = w ;
 		this->hPercent = h;
 		UpdatePercentSize();
 	}
@@ -64,8 +64,16 @@ void GUIWindow::SetSize(int w, int h)
 }
 void GUIWindow::UpdatePercentSize()
 {
-	this->w = (float)WindowProperties::w * ((float)wPercent / 100);
-	this->h = (float)WindowProperties::h * ((float)hPercent / 100);
+	if (hasParentGUIWindow == true)
+	{
+		this->w = parentGUIWindow->w * ((float)wPercent / 100);
+		this->y = parentGUIWindow->h * ((float)hPercent / 100);
+	}
+	else
+	{
+		this->w = (float)WindowProperties::w * ((float)wPercent / 100);
+		this->h = (float)WindowProperties::h * ((float)hPercent / 100);
+	}
 }
 
 
@@ -85,8 +93,16 @@ void GUIWindow::SetPos(int x, int y)
 }
 void GUIWindow::UpdatePercentPos()
 {
-	this->x = (float)WindowProperties::w * ((float)xPercent / 100);
-	this->y = (float)WindowProperties::h * ((float)yPercent / 100);
+	if (hasParentGUIWindow == true)
+	{
+		this->x = parentGUIWindow->x + (parentGUIWindow->w * ((float)xPercent / 100));
+		this->y = parentGUIWindow->y + (parentGUIWindow->h * ((float)yPercent / 100));
+	}
+	else
+	{
+		this->x = (float)WindowProperties::w * ((float)xPercent / 100);
+		this->y = (float)WindowProperties::h * ((float)yPercent / 100);
+	}
 }
 
 
@@ -104,7 +120,4 @@ void GUIWindow::PutInRenderingContainer()
 	ImGui::Text("counter XXXXX");
 
 	ImGui::End();
-
-	
-
 }

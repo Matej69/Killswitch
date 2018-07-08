@@ -1,5 +1,6 @@
 #include "WindowProperties.h"
 
+GLFWwindow* WindowProperties::glfwWindow = nullptr;
 int WindowProperties::w = 0;
 int WindowProperties::h = 0;
 

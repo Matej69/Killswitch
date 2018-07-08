@@ -26,7 +26,6 @@ void window_size_callback(GLFWwindow* window, int w, int h)
 
 int main(void)
 {
-	GLFWwindow* window;
 	/* Initialize the library */
 	if (!glfwInit())
 		return -1;
@@ -34,23 +33,23 @@ int main(void)
 
 	/* Create a windowed mode window and its OpenGL context */
 	WindowProperties::SetSize(640, 480);
-	window = glfwCreateWindow(WindowProperties::w, WindowProperties::h, "Hello World", NULL, NULL);
-	if (!window)
+	WindowProperties::glfwWindow = glfwCreateWindow(WindowProperties::w, WindowProperties::h, "Hello World", NULL, NULL);
+	if (!WindowProperties::glfwWindow)
 	{
 		glfwTerminate();
 		return -1;
 	}
-	glfwSetWindowSizeCallback(window, window_size_callback);
+	glfwSetWindowSizeCallback(WindowProperties::glfwWindow, window_size_callback);
 
 	/* Make the window's context current */
-	glfwMakeContextCurrent(window);
+	glfwMakeContextCurrent(WindowProperties::glfwWindow);
 
 	if (glewInit() != GLEW_OK)
 		std::cout << "GLEW INIT ERROR";
 
 	// Setup ImGui
 	ImGui::CreateContext();
-	ImGui_ImplGlfwGL3_Init(window, true);
+	ImGui_ImplGlfwGL3_Init(WindowProperties::glfwWindow, true);
 	ImGui::StyleColorsDark();
 
 	glEnable(GL_BLEND);
@@ -60,15 +59,16 @@ int main(void)
 	Sprite sprite2 = Sprite(2.0f, 2.0f, 0.0f, 0.0f, "res/textures/larvitar.png");
 
 
-	GUIWindow::CreateWindow("11", 20, 20, 50, 50, MeasurementUnit::PERCENT, MeasurementUnit::PERCENT, window);
-	GUIWindow::CreateWindow("2", 0, 200, 100, 50, MeasurementUnit::PERCENT, MeasurementUnit::PIXELS, window);
+	GUIWindow* p = GUIWindow::CreateWindow("1", 0, 0, 100, 20, MeasurementUnit::PERCENT, MeasurementUnit::PERCENT, false, NULL);
+	for (int i = 0; i < 5; ++i)
+		GUIWindow::CreateWindow(to_string(i+5), i * 16, 2, 15, 15, MeasurementUnit::PERCENT, MeasurementUnit::PERCENT, true, p);
 
 
 	/* Loop until the user closes the window */
-	while (!glfwWindowShouldClose(window))
+	while (!glfwWindowShouldClose(WindowProperties::glfwWindow))
 	{
 		GameClock::OnFrameStart();
-		// imGUI stuf called at atart of every frame
+		// imGUI stuf called at start of every frame
 		ImGui_ImplGlfwGL3_NewFrame();
 
 		/* Render here */
@@ -86,7 +86,7 @@ int main(void)
 		ImGui::Render();
 		ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
 		/* Swap front and back buffers */
-		glfwSwapBuffers(window);
+		glfwSwapBuffers(WindowProperties::glfwWindow);
 		/* Poll for and process events */
 		glfwPollEvents();
 		// game end frame calculation
