@@ -59,14 +59,22 @@ int main(void)
 	Sprite sprite2 = Sprite(2.0f, 2.0f, 0.0f, 0.0f, "res/textures/larvitar.png");
 
 
-	GUIWindow* p = GUIWindow::CreateWindow("1", 0, 0, 100, 20, MeasurementUnit::PERCENT, MeasurementUnit::PERCENT, false, NULL);
+	GUIWindow* p = GUIWindow::CreateWindow(0, 0, 100, 20, MeasurementUnit::PERCENT, MeasurementUnit::PERCENT, false, NULL, GUIWindowTitleType::HAS_TITLE, "yolo");
 	for (int i = 0; i < 5; ++i)
-		GUIWindow::CreateWindow(to_string(i+5), i * 16, 2, 15, 15, MeasurementUnit::PERCENT, MeasurementUnit::PERCENT, true, p);
+		GUIWindow::CreateWindow(i * 16, 2, 15, 15, MeasurementUnit::PERCENT, MeasurementUnit::PERCENT, true, p, GUIWindowTitleType::NO_TITLE);
 
-
+	int a = 0;
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(WindowProperties::glfwWindow))
 	{
+		a++;
+		if (a == 100)
+		{
+			GUIWindow::SetWindowForDestruction(*p);
+			GUIWindow::DestroyWindowsFromDestructionList();
+			GUIWindow::CreateWindow(50, 50, 50, 50, MeasurementUnit::PERCENT, MeasurementUnit::PERCENT, false, NULL, GUIWindowTitleType::HAS_TITLE);
+			GUIWindow::CreateWindow(0, 0, 100, 20, MeasurementUnit::PERCENT, MeasurementUnit::PERCENT, false, NULL, GUIWindowTitleType::HAS_TITLE, "yolo");
+		}
 		GameClock::OnFrameStart();
 		// imGUI stuf called at start of every frame
 		ImGui_ImplGlfwGL3_NewFrame();
@@ -79,10 +87,11 @@ int main(void)
 		sprite2.Render();
 
 		
+		
+
+
+		// imGUI rendering		
 		GUIWindow::PutAllInRenderingContainer();
-
-
-		// imGUI rendering
 		ImGui::Render();
 		ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
 		/* Swap front and back buffers */
