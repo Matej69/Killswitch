@@ -28,14 +28,19 @@ enum GUIWindowTitleType {
 	NO_TITLE
 };
 
+enum GUIWindowType {
+	WINDOW,
+	TEXTBOX
+};
+
 
 class GUIWindow
 {
 public:
-	static list<GUIWindow> guiWindows;
+	static list<GUIWindow*> guiWindows;
 	static list<GUIWindow*> guiWindowsForDestroy;
 	static unsigned int lastGUITitleID;
-private:
+protected:
 	int x, y, w, h, wPercent, hPercent, xPercent, yPercent;
 	MeasurementUnit sizeMUnit;
 	MeasurementUnit posMUnit;
@@ -49,16 +54,19 @@ public:
 
 
 public:
+	GUIWindow();
 	GUIWindow(string name, unsigned int guiWindowID, int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow* parentGUIWindow);
 	~GUIWindow();
-	static GUIWindow* CreateWindow(int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow* parentGUIWindow, GUIWindowTitleType titleType, string nameID = "notitle");
+	static GUIWindow* CreateWindow(int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow* parentGUIWindow, GUIWindowTitleType titleType, string nameID = "notitle", GUIWindowType windowType = GUIWindowType::WINDOW);
 	static void PutAllInRenderingContainer();
 	static void UpdateAllPercentProperties();
 	static void SetWindowForDestruction(GUIWindow& window);
 	static void DestroyWindowsFromDestructionList();
 
-private:
+protected:
 	void PutInRenderingContainer();
+	virtual void SpecificPreRenderingTasks();
+	virtual void SpecificRenderingTasks();
 	void SetSize(int w, int h);
 	void UpdatePercentSize();
 	void SetPos(int x, int y);

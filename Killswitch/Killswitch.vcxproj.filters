@@ -51,6 +51,9 @@
     <ClCompile Include="core\WindowProperties\WindowProperties.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="core\GUI\GUITextbox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\basic.shader" />
@@ -96,6 +99,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="core\WindowProperties\WindowProperties.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\GUI\GUITextbox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

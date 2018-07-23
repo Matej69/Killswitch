@@ -11,6 +11,7 @@
 #include "core\imGUI\imgui.h"
 #include "core\imGUI\imgui_impl_glfw_gl3.h"
 #include "core\GUI\GUIWindow.h"
+#include "core\GUI\GUITextbox.h"
 #include "core\WindowProperties\WindowProperties.h"
 
 using namespace std;
@@ -68,12 +69,14 @@ int main(void)
 	while (!glfwWindowShouldClose(WindowProperties::glfwWindow))
 	{
 		a++;
-		if (a == 100)
+		if (a == 300)
 		{
 			GUIWindow::SetWindowForDestruction(*p);
 			GUIWindow::DestroyWindowsFromDestructionList();
 			GUIWindow::CreateWindow(50, 50, 50, 50, MeasurementUnit::PERCENT, MeasurementUnit::PERCENT, false, NULL, GUIWindowTitleType::HAS_TITLE);
 			GUIWindow::CreateWindow(0, 0, 100, 20, MeasurementUnit::PERCENT, MeasurementUnit::PERCENT, false, NULL, GUIWindowTitleType::HAS_TITLE, "yolo");
+			GUIWindow* win = GUIWindow::CreateWindow(0, 80, 100, 20, MeasurementUnit::PERCENT, MeasurementUnit::PERCENT, false, NULL, GUIWindowTitleType::NO_TITLE, "12345", GUIWindowType::TEXTBOX);
+			((GUITextbox*)win)->text = "Neki luuudi text 12312423423!!!! Neki luuudi text 12312423423!!!!!Neki l luuudi text 12312423423!!!!!Neki luuudi text 12312423423!!!!!Neki luuudi text 12312423423!!!!!Neki luuudi text 12312423423!!!!!Neki luuudi text 12312423423!!!!!Neki luuudi text 12312423423!!!!!Neki luuudi text 12312423423!!!!!Neki luuudi text 12312423423!!!!!Neki luuudi text 12312423423!!!!!Neki luuudi text 12312423423!!!!!Neki luuudi text 12312423423!!!!!Neki luuudi text 12312423423!!!!!Neki luuudi text 12312423423!!!!!Neki luuudi text 12312423423!!!!!Neki luuudi text 12312423423!!!!!Neki luuudi text 12312423423!!!!!Neki luuudi text 12312423423!!!!!Neki luuudi";
 		}
 		GameClock::OnFrameStart();
 		// imGUI stuf called at start of every frame
