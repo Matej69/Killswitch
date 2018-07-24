@@ -11,4 +11,4 @@
 *.tlog
 *.ipch
 *.sdf
-*imgui.ini
+*.ini

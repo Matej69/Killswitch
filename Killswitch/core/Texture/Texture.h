@@ -10,7 +10,7 @@
 */
 class Texture
 {
-private:
+public:
 	unsigned int textureID;
 	unsigned char* textureBuffer;
 

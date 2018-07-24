@@ -1,8 +1,9 @@
 #include "GUIWindow.h"
 #include "GUITextbox.h"
+#include "GUIImage.h"
 
-GUIWindow::GUIWindow(string nameID, unsigned int guiWindowID, int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow* parentGUIWindow)
-	: x(x), y(y), sizeMUnit(sizeMUnit), posMUnit(posMUnit), nameID(nameID), hasParentGUIWindow(hasParentGUIWindow), parentGUIWindow(parentGUIWindow), guiWindowID(guiWindowID)
+GUIWindow::GUIWindow(string nameID, unsigned int guiWindowID, int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow* parentGUIWindow, GUIWindowType windowType)
+	: x(x), y(y), sizeMUnit(sizeMUnit), posMUnit(posMUnit), nameID(nameID), hasParentGUIWindow(hasParentGUIWindow), parentGUIWindow(parentGUIWindow), guiWindowID(guiWindowID), windowType(windowType)
 {
 	SetSize(w, h);
 	SetPos(x, y);
@@ -75,15 +76,13 @@ void GUIWindow::UpdatePercentPos()
 	}
 }
 
-void GUIWindow::PutInRenderingContainer()
+void GUIWindow::PrepareForRendering()
 {
 	//ImGui::SetNextWindowBgAlpha(0.0f);
 	ImGui::SetNextWindowPos(ImVec2(x, y));
 	ImGui::SetNextWindowSize(ImVec2(w, h));
-	ImGui::GetStyle().WindowRounding = 0.0f;
-	ImGui::GetStyle().WindowBorderSize = 0.0f;
 	this->SpecificPreRenderingTasks();
-	ImGui::Begin(this->nameID.c_str(), NULL, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoInputs);
+	ImGui::Begin(this->nameID.c_str(), NULL, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_NoScrollbar);
 	this->SpecificRenderingTasks();
 	ImGui::End();
 }
@@ -92,6 +91,7 @@ void GUIWindow::SpecificPreRenderingTasks()
 {
 	ImGui::GetStyle().WindowRounding = 0.0f;
 	ImGui::GetStyle().WindowBorderSize = 1.0f;
+	ImGui::SetNextWindowBgAlpha(1.0f);
 }
 void GUIWindow::SpecificRenderingTasks()
 {
@@ -117,15 +117,40 @@ list<GUIWindow*> GUIWindow::guiWindowsForDestroy;
 unsigned int GUIWindow::lastGUITitleID = 0;
 
 
-GUIWindow* GUIWindow::CreateWindow(int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow* parentGUIWindow, GUIWindowTitleType titleType, string nameID, GUIWindowType windowType)
+GUIWindow* GUIWindow::CreateWindow(int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow* parentGUIWindow, GUIWindowNameIDType nameIDType, string nameID)
+{
+	unsigned int newHashedId = GUIWindow::SetNameIDAndGenerateHash(nameID, nameIDType);
+	GUIWindow::guiWindows.push_back(new GUIWindow(nameID, newHashedId, x, y, w, h, sizeMUnit, posMUnit, hasParentGUIWindow, parentGUIWindow, GUIWindowType::WINDOW));
+	//if (parentGUIWindow != nullptr)
+	//	parentGUIWindow->childrenWidnows.push_back(&GUIWindow::guiWindows.back());
+	return GUIWindow::guiWindows.back();
+}
+
+GUIWindow* GUIWindow::CreateTextbox(int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow * parentGUIWindow, GUIWindowNameIDType nameIDType, string textboxText, string nameID)
+{
+	unsigned int newHashedId = GUIWindow::SetNameIDAndGenerateHash(nameID, nameIDType);
+	GUIWindow::guiWindows.push_back(new GUITextbox(nameID, newHashedId, x, y, w, h, sizeMUnit, posMUnit, hasParentGUIWindow, parentGUIWindow, textboxText));
+	return GUIWindow::guiWindows.back();
+}
+
+GUIWindow * GUIWindow::CreateImage(int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow * parentGUIWindow, GUIWindowNameIDType nameIDType, string imgSrc, string nameID)
+{
+	unsigned int newHashedId = GUIWindow::SetNameIDAndGenerateHash(nameID, nameIDType);
+	GUIWindow::guiWindows.push_back(new GUIImage(nameID, newHashedId, x, y, w, h, sizeMUnit, posMUnit, hasParentGUIWindow, parentGUIWindow, imgSrc));
+	return GUIWindow::guiWindows.back();
+}
+
+
+
+unsigned int GUIWindow::SetNameIDAndGenerateHash(string& nameID, GUIWindowNameIDType nameIDType)
 {
 	unsigned int newHashedId;
 	// ASSERT if 2 GUI windows with same ID  exist
-	if (titleType == GUIWindowTitleType::HAS_TITLE)
+	if (nameIDType == GUIWindowNameIDType::HAS_NAME_ID)
 	{
 		newHashedId = ImHash(nameID.c_str(), 0);
 	}
-	else if (titleType == GUIWindowTitleType::NO_TITLE)
+	else if (nameIDType == GUIWindowNameIDType::NO_NAME_ID)
 	{
 		nameID = to_string(++lastGUITitleID);
 		newHashedId = ImHash(to_string(lastGUITitleID).c_str(), 0);
@@ -135,56 +160,43 @@ GUIWindow* GUIWindow::CreateWindow(int x, int y, int w, int h, MeasurementUnit s
 	{
 		assert(win->guiWindowID != newHashedId && "ASSERT MESSAGE: 2 GUI window with same nameID exists");
 	}
-
-	if(windowType == GUIWindowType::TEXTBOX)
-		GUIWindow::guiWindows.push_back(new GUITextbox(nameID, newHashedId, x, y, w, h, sizeMUnit, posMUnit, hasParentGUIWindow, parentGUIWindow));
-	else
-		GUIWindow::guiWindows.push_back(new GUIWindow(nameID, newHashedId, x, y, w, h, sizeMUnit, posMUnit, hasParentGUIWindow, parentGUIWindow));
-	//if (parentGUIWindow != nullptr)
-	//	parentGUIWindow->childrenWidnows.push_back(&GUIWindow::guiWindows.back());
-	return GUIWindow::guiWindows.back();
+	return newHashedId;
 }
 
 void GUIWindow::SetWindowForDestruction(GUIWindow &window)
 {
-	cout << "PREPARING FOR DELETING WindowGUI:" << endl;
+	cout << "## SETTING GUI WINDOWS IN DESTRUCTION CONTAINER:" << endl;
 	for (GUIWindow* win : GUIWindow::guiWindows)
 	{
 		if ((win == &window || (win->parentGUIWindow != nullptr && win->parentGUIWindow == &window)))
 		{
-			cout << "\t" + win->nameID << endl;
+			cout << "nameID=" << win->nameID << "\t type=" << win->windowType << endl;
 			GUIWindow::guiWindowsForDestroy.push_back(win);
 		}
-	}	
-	/*
-	GUIWindow::guiWindows.remove_if([&window](GUIWindow& win)
-	{
-		cout << "\t" + win.nameID << endl;
-		return (&win == &window || (win.parentGUIWindow != nullptr && win.parentGUIWindow == &window));
-	});
-	*/
-	cout << "DONE PREPARING FOR DELETING " << endl;
+	}
+	cout << "## DONE SETTING GUI WINDOWS IN DESTRUCTION CONTAINER" << endl;
 }
 
 void GUIWindow::DestroyWindowsFromDestructionList()
 {
-	cout << "DESTROYING WINDOWS:" << endl;
+	cout << "** DESTROYING GUI WINDOWS FROM DESTRUCTION CONTAINER:" << endl;
 	for (GUIWindow* winToDestroy : GUIWindow::guiWindowsForDestroy)
 	{
 		GUIWindow::guiWindows.remove_if([&winToDestroy](GUIWindow* win)
 		{
-			cout << ((winToDestroy->guiWindowID == win->guiWindowID) ? win->nameID : "") << endl;
+			if (winToDestroy->guiWindowID == win->guiWindowID)
+				cout << "nameID=" << win->nameID << "\t type=" << win->windowType << endl;
 			return (winToDestroy->guiWindowID == win->guiWindowID);
 		});
 	}
-	cout << "DONE DESTROYING WINDOWS" << endl;
+	cout << "** DESTROYING GUI WINDOWS FROM DESTRUCTION CONTAINER" << endl;
 }
 
-void GUIWindow::PutAllInRenderingContainer()
+void GUIWindow::PrepareAllForRendering()
 {
 	for (GUIWindow* guiWin : GUIWindow::guiWindows)
 	{
-		guiWin->PutInRenderingContainer();
+		guiWin->PrepareForRendering();
 	}
 }
 

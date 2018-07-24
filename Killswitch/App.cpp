@@ -12,6 +12,7 @@
 #include "core\imGUI\imgui_impl_glfw_gl3.h"
 #include "core\GUI\GUIWindow.h"
 #include "core\GUI\GUITextbox.h"
+#include "core\GUI\GUIImage.h"
 #include "core\WindowProperties\WindowProperties.h"
 
 using namespace std;
@@ -33,7 +34,7 @@ int main(void)
 
 
 	/* Create a windowed mode window and its OpenGL context */
-	WindowProperties::SetSize(640, 480);
+	WindowProperties::SetSize(900, 550);
 	WindowProperties::glfwWindow = glfwCreateWindow(WindowProperties::w, WindowProperties::h, "Hello World", NULL, NULL);
 	if (!WindowProperties::glfwWindow)
 	{
@@ -60,24 +61,17 @@ int main(void)
 	Sprite sprite2 = Sprite(2.0f, 2.0f, 0.0f, 0.0f, "res/textures/larvitar.png");
 
 
-	GUIWindow* p = GUIWindow::CreateWindow(0, 0, 100, 20, MeasurementUnit::PERCENT, MeasurementUnit::PERCENT, false, NULL, GUIWindowTitleType::HAS_TITLE, "yolo");
+	GUIWindow* p = GUIWindow::CreateWindow(0, 0, 100, 20, MeasurementUnit::PERCENT, MeasurementUnit::PERCENT, false, NULL, GUIWindowNameIDType::HAS_NAME_ID, "yolo");
 	for (int i = 0; i < 5; ++i)
-		GUIWindow::CreateWindow(i * 16, 2, 15, 15, MeasurementUnit::PERCENT, MeasurementUnit::PERCENT, true, p, GUIWindowTitleType::NO_TITLE);
+		GUIWindow::CreateWindow(i * 16, 2, 15, 15, MeasurementUnit::PERCENT, MeasurementUnit::PERCENT, true, p, GUIWindowNameIDType::NO_NAME_ID);
+	GUIWindow::CreateTextbox(0, 80, 100, 20, MeasurementUnit::PERCENT, MeasurementUnit::PERCENT, false, p, GUIWindowNameIDType::NO_NAME_ID, "neki jakooooo sexy text koji tu stoji burazzcccccccccccc ccccccccccccccccccccccccccccccccc cccccccccccccc sssssssssssssssssssssssssssssssssss ssssssss eeeeeeeeeeeee ffffffffffffffffff vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv v v vvvvvvvv zz jakooooo sexy text koji tu stoji burazzcccccccccccc ccccccccccccccccccccccccccccccccc cccccccccccccc sssssssssssssssssssssssssssssssssss ssssssss eeeeeeeeeeeee ffffffffffffffffff vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv v v vvvvvvvv zz jakooooo sexy text koji tu stoji burazzcccccccccccc ccccccccccccccccccccccccccccccccc cccccccccccccc sssssssssssssssssss", "12345");
+	GUIWindow::CreateImage(0, 0, 50, 50, MeasurementUnit::PERCENT, MeasurementUnit::PERCENT, false, p, GUIWindowNameIDType::NO_NAME_ID, "res/textures/larvitar.png", "12345");
+
 
 	int a = 0;
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(WindowProperties::glfwWindow))
 	{
-		a++;
-		if (a == 300)
-		{
-			GUIWindow::SetWindowForDestruction(*p);
-			GUIWindow::DestroyWindowsFromDestructionList();
-			GUIWindow::CreateWindow(50, 50, 50, 50, MeasurementUnit::PERCENT, MeasurementUnit::PERCENT, false, NULL, GUIWindowTitleType::HAS_TITLE);
-			GUIWindow::CreateWindow(0, 0, 100, 20, MeasurementUnit::PERCENT, MeasurementUnit::PERCENT, false, NULL, GUIWindowTitleType::HAS_TITLE, "yolo");
-			GUIWindow* win = GUIWindow::CreateWindow(0, 80, 100, 20, MeasurementUnit::PERCENT, MeasurementUnit::PERCENT, false, NULL, GUIWindowTitleType::NO_TITLE, "12345", GUIWindowType::TEXTBOX);
-			((GUITextbox*)win)->text = "Neki luuudi text 12312423423!!!! Neki luuudi text 12312423423!!!!!Neki l luuudi text 12312423423!!!!!Neki luuudi text 12312423423!!!!!Neki luuudi text 12312423423!!!!!Neki luuudi text 12312423423!!!!!Neki luuudi text 12312423423!!!!!Neki luuudi text 12312423423!!!!!Neki luuudi text 12312423423!!!!!Neki luuudi text 12312423423!!!!!Neki luuudi text 12312423423!!!!!Neki luuudi text 12312423423!!!!!Neki luuudi text 12312423423!!!!!Neki luuudi text 12312423423!!!!!Neki luuudi text 12312423423!!!!!Neki luuudi text 12312423423!!!!!Neki luuudi text 12312423423!!!!!Neki luuudi text 12312423423!!!!!Neki luuudi text 12312423423!!!!!Neki luuudi";
-		}
 		GameClock::OnFrameStart();
 		// imGUI stuf called at start of every frame
 		ImGui_ImplGlfwGL3_NewFrame();
@@ -89,12 +83,8 @@ int main(void)
 		sprite.Render();
 		sprite2.Render();
 
-		
-		
-
-
-		// imGUI rendering		
-		GUIWindow::PutAllInRenderingContainer();
+		// imGUI rendering
+		GUIWindow::PrepareAllForRendering();
 		ImGui::Render();
 		ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
 		/* Swap front and back buffers */

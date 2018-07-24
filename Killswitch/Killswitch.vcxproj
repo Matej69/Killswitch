@@ -138,6 +138,7 @@
     <ClCompile Include="core\GUI\GUIWindow.cpp" />
     <ClCompile Include="core\WindowProperties\WindowProperties.cpp" />
     <ClCompile Include="core\GUI\GUITextbox.cpp" />
+    <ClCompile Include="core\GUI\GUIImage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\basic.shader" />
@@ -158,6 +159,7 @@
     <ClInclude Include="core\GUI\GUIWindow.h" />
     <ClInclude Include="core\WindowProperties\WindowProperties.h" />
     <ClInclude Include="core\GUI\GUITextbox.h" />
+    <ClInclude Include="core\GUI\GUIImage.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\textures\larvitar.png" />
