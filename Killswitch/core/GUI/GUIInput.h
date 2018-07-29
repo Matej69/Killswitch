@@ -22,12 +22,13 @@ class GUIInput : public GUIWindow
 {
 public:
 	GUIInput();
-	GUIInput(string nameID, unsigned int guiWindowID, int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow* parentGUIWindow, string label, VALUE_TYPE value);
+	GUIInput(string nameID, unsigned int guiWindowID, int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow* parentGUIWindow, string label, VALUE_TYPE value, int maxLength);
 	virtual ~GUIInput();
 public:
 	VALUE_TYPE value;
 	InputType inputType;
 	string label;
+	int maxLength;
 
 public:
 	void SpecificPreRenderingTasks() override;

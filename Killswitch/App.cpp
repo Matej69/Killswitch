@@ -68,7 +68,11 @@ int main(void)
 	GUIWindow::CreateTextbox(0, 80, 100, 20, MeasurementUnit::PERCENT, MeasurementUnit::PERCENT, false, p, GUIWindowNameIDType::NO_NAME_ID, "neki jakooooo sexy text koji tu stoji burazzcccccccccccc ccccccccccccccccccccccccccccccccc cccccccccccccc sssssssssssssssssssssssssssssssssss ssssssss eeeeeeeeeeeee ffffffffffffffffff vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv v v vvvvvvvv zz jakooooo sexy text koji tu stoji burazzcccccccccccc ccccccccccccccccccccccccccccccccc cccccccccccccc sssssssssssssssssssssssssssssssssss ssssssss eeeeeeeeeeeee ffffffffffffffffff vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv v v vvvvvvvv zz jakooooo sexy text koji tu stoji burazzcccccccccccc ccccccccccccccccccccccccccccccccc cccccccccccccc sssssssssssssssssss", "12345");
 	GUIWindow::CreateImage(0, 0, 50, 50, MeasurementUnit::PERCENT, MeasurementUnit::PERCENT, false, p, GUIWindowNameIDType::NO_NAME_ID, "res/textures/larvitar.png", "12345");
 
-	GUIWindow* pInput = GUIWindow::CreateInput(0, 0, 50, 50, MeasurementUnit::PERCENT, MeasurementUnit::PERCENT, false, p, GUIWindowNameIDType::NO_NAME_ID, "mylabel", "!NEKI TEXT!");
+
+	GUIWindow::CreateInput(0, 0, 50, 50, MeasurementUnit::PERCENT, MeasurementUnit::PIXELS, false, NULL, GUIWindowNameIDType::NO_NAME_ID, "mylabel", "tst", 10);
+	GUIWindow::CreateInput(100, 100, 50, 50, MeasurementUnit::PERCENT, MeasurementUnit::PIXELS, false, NULL, GUIWindowNameIDType::NO_NAME_ID, "mylabel1", 123, 10);
+	GUIWindow::CreateInput(200, 200, 50, 50, MeasurementUnit::PERCENT, MeasurementUnit::PIXELS, false, NULL, GUIWindowNameIDType::NO_NAME_ID, "mylabel2", 123.0f, 10);
+
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(WindowProperties::glfwWindow))
 	{

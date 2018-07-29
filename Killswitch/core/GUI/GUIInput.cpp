@@ -28,11 +28,12 @@ GUIInput<VALUE_TYPE>::~GUIInput()
 
 
 template<class VALUE_TYPE>
-GUIInput<VALUE_TYPE>::GUIInput(string nameID, unsigned int guiWindowID, int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow* parentGUIWindow, string label, VALUE_TYPE value)
+GUIInput<VALUE_TYPE>::GUIInput(string nameID, unsigned int guiWindowID, int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow* parentGUIWindow, string label, VALUE_TYPE value, int maxLength)
 	: GUIWindow(nameID, guiWindowID, x, y, w, h, sizeMUnit, posMUnit, hasParentGUIWindow, parentGUIWindow, GUIWindowType::INPUT)
 {
 	this->label = label;
 	this->value = value;
+	this->maxLength = maxLength;
 	string valueType = typeid(VALUE_TYPE).name();
 	if (valueType == "int")
 		inputType = InputType::INT;
@@ -62,27 +63,32 @@ static int inputCallback(ImGuiTextEditCallbackData* textEditCallbackData) {
 	return 0;
 }
 
-#define TOSTRING(x) #x
-template<class VALUE_TYPE>
-void GUIInput<VALUE_TYPE>::SpecificRenderingTasks()
+template<>
+void GUIInput<int>::SpecificRenderingTasks()
 {
-	//VALUE_TYPE* ptr = &value;
-	if (inputType == InputType::INT)
-		ImGui::InputInt(label.c_str(), reinterpret_cast<int*>(&value));
-	else if (inputType == InputType::FLOAT)
-		ImGui::InputFloat(label.c_str(), reinterpret_cast<float*>(&value));
-	else if (inputType == InputType::DOUBLE)
-		ImGui::InputDouble(label.c_str(), reinterpret_cast<double*>(&value));
-	else
-	{
-		//int(GUIInput<VALUE_TYPE>::*ptr)(ImGuiTextEditCallbackData* textEditCallbackData) = &GUIInput::inputCallback;
-		//ImGuiTextEditCallback callbackPtr = reinterpret_cast<ImGuiTextEditCallback>(ptr);
-		//labelToBeLoaded = reinterpret_cast<string*>(&value);
-		char* charPtrValue = TOSTRING(value).c_str();
-		ImGui::InputText(label.c_str(), charPtrValue, 255, ImGuiInputTextFlags_CallbackAlways, inputCallback);
-	}
-
-	cout << "TEXT IS: " << value << endl;
+	ImGui::InputInt(label.c_str(), reinterpret_cast<int*>(&value));
+	cout << "INT TEXT IS: " << value << endl;
+}
+template<>
+void GUIInput<float>::SpecificRenderingTasks()
+{
+	ImGui::InputFloat(label.c_str(), reinterpret_cast<float*>(&value));
+	cout << "INT TEXT IS: " << value << endl;
+}
+template<>
+void GUIInput<double>::SpecificRenderingTasks()
+{
+	ImGui::InputDouble(label.c_str(), reinterpret_cast<double*>(&value));
+	cout << "INT TEXT IS: " << value << endl;
+}
+template<>
+void GUIInput<string>::SpecificRenderingTasks()
+{
+	// In 'this->maxLength + 1', '+ 1' will be '\0' character at the end 
+	char* stringBuffer = new char[this->maxLength+1];
+	strcpy(stringBuffer, value.c_str());
+	ImGui::InputText(label.c_str(), stringBuffer, this->maxLength+1);
+	value = stringBuffer;
 }
 
 
