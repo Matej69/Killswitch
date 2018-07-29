@@ -24,7 +24,6 @@ void GUITextbox::SpecificPreRenderingTasks()
 	ImGui::SetNextWindowBgAlpha(0.0f);
 	ImGui::GetStyle().WindowBorderSize = 0.0f;
 }
-
 void GUITextbox::SpecificRenderingTasks()
 {
 	ImGui::TextWrapped(this->text.c_str());

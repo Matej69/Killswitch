@@ -57,6 +57,9 @@
     <ClCompile Include="core\GUI\GUIImage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="core\GUI\GUIInput.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\basic.shader" />
@@ -108,6 +111,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="core\GUI\GUIImage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\GUI\GUIInput.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

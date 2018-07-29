@@ -1,6 +1,7 @@
 #include "GUIWindow.h"
 #include "GUITextbox.h"
 #include "GUIImage.h"
+#include "GUIInput.h"
 
 GUIWindow::GUIWindow(string nameID, unsigned int guiWindowID, int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow* parentGUIWindow, GUIWindowType windowType)
 	: x(x), y(y), sizeMUnit(sizeMUnit), posMUnit(posMUnit), nameID(nameID), hasParentGUIWindow(hasParentGUIWindow), parentGUIWindow(parentGUIWindow), guiWindowID(guiWindowID), windowType(windowType)
@@ -82,7 +83,7 @@ void GUIWindow::PrepareForRendering()
 	ImGui::SetNextWindowPos(ImVec2(x, y));
 	ImGui::SetNextWindowSize(ImVec2(w, h));
 	this->SpecificPreRenderingTasks();
-	ImGui::Begin(this->nameID.c_str(), NULL, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_NoScrollbar);
+	ImGui::Begin(this->nameID.c_str(), NULL, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoScrollbar);
 	this->SpecificRenderingTasks();
 	ImGui::End();
 }
@@ -133,13 +134,37 @@ GUIWindow* GUIWindow::CreateTextbox(int x, int y, int w, int h, MeasurementUnit 
 	return GUIWindow::guiWindows.back();
 }
 
-GUIWindow * GUIWindow::CreateImage(int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow * parentGUIWindow, GUIWindowNameIDType nameIDType, string imgSrc, string nameID)
+GUIWindow* GUIWindow::CreateImage(int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow * parentGUIWindow, GUIWindowNameIDType nameIDType, string imgSrc, string nameID)
 {
 	unsigned int newHashedId = GUIWindow::SetNameIDAndGenerateHash(nameID, nameIDType);
 	GUIWindow::guiWindows.push_back(new GUIImage(nameID, newHashedId, x, y, w, h, sizeMUnit, posMUnit, hasParentGUIWindow, parentGUIWindow, imgSrc));
 	return GUIWindow::guiWindows.back();
 }
 
+GUIWindow* GUIWindow::CreateInput(int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow * parentGUIWindow, GUIWindowNameIDType nameIDType, string label, int value, string nameID)
+{
+	unsigned int newHashedId = GUIWindow::SetNameIDAndGenerateHash(nameID, nameIDType);
+	GUIWindow::guiWindows.push_back(new GUIInput<int>(nameID, newHashedId, x, y, w, h, sizeMUnit, posMUnit, hasParentGUIWindow, parentGUIWindow, label, value));
+	return GUIWindow::guiWindows.back();
+}
+GUIWindow* GUIWindow::CreateInput(int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow * parentGUIWindow, GUIWindowNameIDType nameIDType, string label, float value, string nameID)
+{
+	unsigned int newHashedId = GUIWindow::SetNameIDAndGenerateHash(nameID, nameIDType);
+	GUIWindow::guiWindows.push_back(new GUIInput<float>(nameID, newHashedId, x, y, w, h, sizeMUnit, posMUnit, hasParentGUIWindow, parentGUIWindow, label, value));
+	return GUIWindow::guiWindows.back();
+}
+GUIWindow* GUIWindow::CreateInput(int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow * parentGUIWindow, GUIWindowNameIDType nameIDType, string label, double value, string nameID)
+{
+	unsigned int newHashedId = GUIWindow::SetNameIDAndGenerateHash(nameID, nameIDType);
+	GUIWindow::guiWindows.push_back(new GUIInput<double>(nameID, newHashedId, x, y, w, h, sizeMUnit, posMUnit, hasParentGUIWindow, parentGUIWindow, label, value));
+	return GUIWindow::guiWindows.back();
+}
+GUIWindow* GUIWindow::CreateInput(int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow * parentGUIWindow, GUIWindowNameIDType nameIDType, string label, string value, string nameID)
+{
+	unsigned int newHashedId = GUIWindow::SetNameIDAndGenerateHash(nameID, nameIDType);
+	GUIWindow::guiWindows.push_back(new GUIInput<string>(nameID, newHashedId, x, y, w, h, sizeMUnit, posMUnit, hasParentGUIWindow, parentGUIWindow, label, value));
+	return GUIWindow::guiWindows.back();
+}
 
 
 unsigned int GUIWindow::SetNameIDAndGenerateHash(string& nameID, GUIWindowNameIDType nameIDType)

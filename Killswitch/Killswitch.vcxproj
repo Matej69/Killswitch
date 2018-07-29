@@ -126,6 +126,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
+    <ClCompile Include="core\GUI\GUIInput.cpp" />
     <ClCompile Include="core\imGUI\imgui.cpp" />
     <ClCompile Include="core\imGUI\imgui_demo.cpp" />
     <ClCompile Include="core\imGUI\imgui_draw.cpp" />
@@ -144,6 +145,7 @@
     <None Include="res\shaders\basic.shader" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="core\GUI\GUIInput.h" />
     <ClInclude Include="core\imGUI\imconfig.h" />
     <ClInclude Include="core\imGUI\imgui.h" />
     <ClInclude Include="core\imGUI\imgui_impl_glfw_gl3.h" />

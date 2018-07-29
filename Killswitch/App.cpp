@@ -13,6 +13,7 @@
 #include "core\GUI\GUIWindow.h"
 #include "core\GUI\GUITextbox.h"
 #include "core\GUI\GUIImage.h"
+#include "core\GUI\GUIInput.h"
 #include "core\WindowProperties\WindowProperties.h"
 
 using namespace std;
@@ -67,8 +68,7 @@ int main(void)
 	GUIWindow::CreateTextbox(0, 80, 100, 20, MeasurementUnit::PERCENT, MeasurementUnit::PERCENT, false, p, GUIWindowNameIDType::NO_NAME_ID, "neki jakooooo sexy text koji tu stoji burazzcccccccccccc ccccccccccccccccccccccccccccccccc cccccccccccccc sssssssssssssssssssssssssssssssssss ssssssss eeeeeeeeeeeee ffffffffffffffffff vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv v v vvvvvvvv zz jakooooo sexy text koji tu stoji burazzcccccccccccc ccccccccccccccccccccccccccccccccc cccccccccccccc sssssssssssssssssssssssssssssssssss ssssssss eeeeeeeeeeeee ffffffffffffffffff vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv v v vvvvvvvv zz jakooooo sexy text koji tu stoji burazzcccccccccccc ccccccccccccccccccccccccccccccccc cccccccccccccc sssssssssssssssssss", "12345");
 	GUIWindow::CreateImage(0, 0, 50, 50, MeasurementUnit::PERCENT, MeasurementUnit::PERCENT, false, p, GUIWindowNameIDType::NO_NAME_ID, "res/textures/larvitar.png", "12345");
 
-
-	int a = 0;
+	GUIWindow* pInput = GUIWindow::CreateInput(0, 0, 50, 50, MeasurementUnit::PERCENT, MeasurementUnit::PERCENT, false, p, GUIWindowNameIDType::NO_NAME_ID, "mylabel", "!NEKI TEXT!");
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(WindowProperties::glfwWindow))
 	{
@@ -93,8 +93,8 @@ int main(void)
 		glfwPollEvents();
 		// game end frame calculation
 		GameClock::OnFrameEnd();
-		//cout << GameClock::fps << endl;
-		//cout << GameClock::deltaTime << endl;
+		// cout << GameClock::fps << endl;
+		// cout << GameClock::deltaTime << endl;
 	}
 
 	ImGui_ImplGlfwGL3_Shutdown();

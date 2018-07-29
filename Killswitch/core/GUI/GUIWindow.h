@@ -35,7 +35,8 @@ enum GUIWindowNameIDType {
 enum GUIWindowType {
 	WINDOW,
 	TEXTBOX,
-	IMAGE
+	INPUT,
+	IMAGE,
 };
 
 
@@ -66,6 +67,10 @@ public:
 	static GUIWindow* CreateWindow(int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow* parentGUIWindow, GUIWindowNameIDType nameIDType, string nameID = "notitle");
 	static GUIWindow* CreateTextbox(int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow* parentGUIWindow, GUIWindowNameIDType nameIDType, string textboxText, string nameID = "notitle");
 	static GUIWindow* CreateImage(int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow* parentGUIWindow, GUIWindowNameIDType nameIDType, string imgSrc, string nameID = "notitle");
+	static GUIWindow* CreateInput(int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow* parentGUIWindow, GUIWindowNameIDType nameIDType, string label, int value, string nameID = "notitle");
+	static GUIWindow* CreateInput(int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow* parentGUIWindow, GUIWindowNameIDType nameIDType, string label, float value, string nameID = "notitle");
+	static GUIWindow* CreateInput(int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow* parentGUIWindow, GUIWindowNameIDType nameIDType, string label, double value, string nameID = "notitle");
+	static GUIWindow* CreateInput(int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow* parentGUIWindow, GUIWindowNameIDType nameIDType, string label, string value, string nameID = "notitle");	
 	static unsigned int SetNameIDAndGenerateHash(string& nameID, GUIWindowNameIDType nameIDType);
 	static void PrepareAllForRendering();
 	static void UpdateAllPercentProperties();
@@ -83,3 +88,4 @@ protected:
 };
 
 #endif
+
