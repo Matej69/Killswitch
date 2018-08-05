@@ -141,30 +141,29 @@ GUIWindow* GUIWindow::CreateImage(int x, int y, int w, int h, MeasurementUnit si
 	return GUIWindow::guiWindows.back();
 }
 
-
 GUIWindow* GUIWindow::CreateInput(int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow * parentGUIWindow, GUIWindowNameIDType nameIDType, string label, int value, int maxLength, string nameID)
 {
 	unsigned int newHashedId = GUIWindow::SetNameIDAndGenerateHash(nameID, nameIDType);
 	GUIWindow::guiWindows.push_back(new GUIInput<int>(nameID, newHashedId, x, y, w, h, sizeMUnit, posMUnit, hasParentGUIWindow, parentGUIWindow, label, value, maxLength));
-	return GUIWindow::guiWindows.back();
+	return (GUIInput<int>*)GUIWindow::guiWindows.back();
 }
 GUIWindow* GUIWindow::CreateInput(int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow * parentGUIWindow, GUIWindowNameIDType nameIDType, string label, float value, int maxLength, string nameID)
 {
 	unsigned int newHashedId = GUIWindow::SetNameIDAndGenerateHash(nameID, nameIDType);
 	GUIWindow::guiWindows.push_back(new GUIInput<float>(nameID, newHashedId, x, y, w, h, sizeMUnit, posMUnit, hasParentGUIWindow, parentGUIWindow, label, value, maxLength));
-	return GUIWindow::guiWindows.back();
+	return (GUIInput<float>*)GUIWindow::guiWindows.back();
 }
 GUIWindow* GUIWindow::CreateInput(int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow * parentGUIWindow, GUIWindowNameIDType nameIDType, string label, double value, int maxLength, string nameID)
 {
 	unsigned int newHashedId = GUIWindow::SetNameIDAndGenerateHash(nameID, nameIDType);
 	GUIWindow::guiWindows.push_back(new GUIInput<double>(nameID, newHashedId, x, y, w, h, sizeMUnit, posMUnit, hasParentGUIWindow, parentGUIWindow, label, value, maxLength));
-	return GUIWindow::guiWindows.back();
+	return (GUIInput<double>*)GUIWindow::guiWindows.back();
 }
 GUIWindow* GUIWindow::CreateInput(int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow * parentGUIWindow, GUIWindowNameIDType nameIDType, string label, string value, int maxLength, string nameID)
 {
 	unsigned int newHashedId = GUIWindow::SetNameIDAndGenerateHash(nameID, nameIDType);
 	GUIWindow::guiWindows.push_back(new GUIInput<string>(nameID, newHashedId, x, y, w, h, sizeMUnit, posMUnit, hasParentGUIWindow, parentGUIWindow, label, value, maxLength));
-	return GUIWindow::guiWindows.back();
+	return (GUIInput<string>*)GUIWindow::guiWindows.back();
 }
 
 

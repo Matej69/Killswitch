@@ -48,47 +48,42 @@ GUIInput<VALUE_TYPE>::GUIInput(string nameID, unsigned int guiWindowID, int x, i
 template<class VALUE_TYPE>
 void GUIInput<VALUE_TYPE>::SpecificPreRenderingTasks()
 {
-	ImGui::SetNextWindowBgAlpha(0.0f);
+	ImGui::SetNextWindowBgAlpha(1.0f);
 	ImGui::GetStyle().WindowBorderSize = 0.0f;
 }
 
 
-/*
-#"$("/&#$/&"#$/&"#/$&"#()$&"#)($&"#)($/&")#($&"#/$&##/&$)"#$/ FIND BULSHIT HERE "#(!"/#!"&$("$()"&=)!"&$=)(!"/$)(!"/$(/!"=)$(/"!)=($/!"
-*/
-static string* labelToBeLoaded;
-static int inputCallback(ImGuiTextEditCallbackData* textEditCallbackData) {
-	//labelToBeLoaded->assign(textEditCallbackData->Buf);
-	//cout << *labelToBeLoaded;
-	return 0;
-}
-
 template<>
 void GUIInput<int>::SpecificRenderingTasks()
 {
+	int holdOldValue = value;
 	ImGui::InputInt(label.c_str(), reinterpret_cast<int*>(&value));
-	cout << "INT TEXT IS: " << value << endl;
+	(holdOldValue != value) ? this->valueChangeCallback(value) : NULL;
 }
 template<>
 void GUIInput<float>::SpecificRenderingTasks()
 {
+	float holdOldValue = value;
 	ImGui::InputFloat(label.c_str(), reinterpret_cast<float*>(&value));
-	cout << "INT TEXT IS: " << value << endl;
+	(holdOldValue != value) ? this->valueChangeCallback(value) : NULL;
 }
 template<>
 void GUIInput<double>::SpecificRenderingTasks()
 {
+	double holdOldValue = value;
 	ImGui::InputDouble(label.c_str(), reinterpret_cast<double*>(&value));
-	cout << "INT TEXT IS: " << value << endl;
+	(holdOldValue != value) ? this->valueChangeCallback(value) : NULL;
 }
 template<>
 void GUIInput<string>::SpecificRenderingTasks()
 {
+	string holdOldValue = value;
 	// In 'this->maxLength + 1', '+ 1' will be '\0' character at the end 
-	char* stringBuffer = new char[this->maxLength+1];
+	char* stringBuffer = new char[this->maxLength + 1];
 	strcpy(stringBuffer, value.c_str());
-	ImGui::InputText(label.c_str(), stringBuffer, this->maxLength+1);
+	ImGui::InputText(label.c_str(), stringBuffer, this->maxLength + 1);
 	value = stringBuffer;
+	(holdOldValue != value) ? this->valueChangeCallback(value) : NULL;
 }
 
 

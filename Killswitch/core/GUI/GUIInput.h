@@ -29,6 +29,7 @@ public:
 	InputType inputType;
 	string label;
 	int maxLength;
+	void(*valueChangeCallback)(VALUE_TYPE);
 
 public:
 	void SpecificPreRenderingTasks() override;

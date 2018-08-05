@@ -71,7 +71,6 @@ public:
 	static GUIWindow* CreateInput(int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow* parentGUIWindow, GUIWindowNameIDType nameIDType, string label, float value, int maxLength = 0, string nameID = "notitle");
 	static GUIWindow* CreateInput(int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow* parentGUIWindow, GUIWindowNameIDType nameIDType, string label, double value, int maxLength = 0, string nameID = "notitle");
 	static GUIWindow* CreateInput(int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow* parentGUIWindow, GUIWindowNameIDType nameIDType, string label, string value, int maxLength, string nameID = "notitle");
-
 	static unsigned int SetNameIDAndGenerateHash(string& nameID, GUIWindowNameIDType nameIDType);
 	static void PrepareAllForRendering();
 	static void UpdateAllPercentProperties();
