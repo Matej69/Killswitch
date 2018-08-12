@@ -31,6 +31,7 @@ void GameClock::OnFrameEnd()
 	if ((int)(currentSecondTimePassed) > 0) {
 		currentSecondTimePassed = 0;
 		fps = curSecondFrames;
+		curSecondFrames = 0;
 	}
 	curSecondFrames++;
 }

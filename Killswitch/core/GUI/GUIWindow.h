@@ -34,6 +34,7 @@ enum GUIWindowNameIDType {
 
 enum GUIWindowType {
 	WINDOW,
+	BUTTON,
 	TEXTBOX,
 	INPUT,
 	IMAGE,
@@ -64,13 +65,14 @@ public:
 	GUIWindow();
 	GUIWindow(string name, unsigned int guiWindowID, int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow* parentGUIWindow, GUIWindowType windowType);
 	~GUIWindow();
-	static GUIWindow* CreateWindow(int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow* parentGUIWindow, GUIWindowNameIDType nameIDType, string nameID = "notitle");
-	static GUIWindow* CreateTextbox(int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow* parentGUIWindow, GUIWindowNameIDType nameIDType, string textboxText, string nameID = "notitle");
-	static GUIWindow* CreateImage(int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow* parentGUIWindow, GUIWindowNameIDType nameIDType, string imgSrc, string nameID = "notitle");
-	static GUIWindow* CreateInput(int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow* parentGUIWindow, GUIWindowNameIDType nameIDType, string label, int value, int maxLength = 0, string nameID = "notitle");
-	static GUIWindow* CreateInput(int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow* parentGUIWindow, GUIWindowNameIDType nameIDType, string label, float value, int maxLength = 0, string nameID = "notitle");
-	static GUIWindow* CreateInput(int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow* parentGUIWindow, GUIWindowNameIDType nameIDType, string label, double value, int maxLength = 0, string nameID = "notitle");
-	static GUIWindow* CreateInput(int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow* parentGUIWindow, GUIWindowNameIDType nameIDType, string label, string value, int maxLength, string nameID = "notitle");
+	static GUIWindow* CreateWindow(int x, int y, int w, int h, MeasurementUnit posMUnit, MeasurementUnit sizeMUnit, bool hasParentGUIWindow, GUIWindow* parentGUIWindow, GUIWindowNameIDType nameIDType, string nameID = "notitle");
+	static GUIWindow* CreateButton(int x, int y, int w, int h, MeasurementUnit posMUnit, MeasurementUnit sizeMUnit, bool hasParentGUIWindow, GUIWindow* parentGUIWindow, GUIWindowNameIDType nameIDType, string label, void(*clickedCallback)(), string nameID = "notitle");
+	static GUIWindow* CreateTextbox(int x, int y, int w, int h, MeasurementUnit posMUnit, MeasurementUnit sizeMUnit, bool hasParentGUIWindow, GUIWindow* parentGUIWindow, GUIWindowNameIDType nameIDType, string textboxText, string nameID = "notitle");
+	static GUIWindow* CreateImage(int x, int y, int w, int h, MeasurementUnit posMUnit, MeasurementUnit sizeMUnit, bool hasParentGUIWindow, GUIWindow* parentGUIWindow, GUIWindowNameIDType nameIDType, string imgSrc, string nameID = "notitle");
+	static GUIWindow* CreateInput(int x, int y, int w, int h, MeasurementUnit posMUnit, MeasurementUnit sizeMUnit, bool hasParentGUIWindow, GUIWindow* parentGUIWindow, GUIWindowNameIDType nameIDType, string label, int value, void(*valueChangeCallback)(int), int maxValue = INT_MAX, int minValue = INT_MIN, string nameID = "notitle");
+	static GUIWindow* CreateInput(int x, int y, int w, int h, MeasurementUnit posMUnit, MeasurementUnit sizeMUnit, bool hasParentGUIWindow, GUIWindow* parentGUIWindow, GUIWindowNameIDType nameIDType, string label, float value, void(*valueChangeCallback)(float), int maxValue = INT_MAX, int minValue = INT_MIN, string nameID = "notitle");
+	static GUIWindow* CreateInput(int x, int y, int w, int h, MeasurementUnit posMUnit, MeasurementUnit sizeMUnit, bool hasParentGUIWindow, GUIWindow* parentGUIWindow, GUIWindowNameIDType nameIDType, string label, double value, void(*valueChangeCallback)(double), int maxValue = INT_MAX, int minValue = INT_MIN, string nameID = "notitle");
+	static GUIWindow* CreateInput(int x, int y, int w, int h, MeasurementUnit posMUnit, MeasurementUnit sizeMUnit, bool hasParentGUIWindow, GUIWindow* parentGUIWindow, GUIWindowNameIDType nameIDType, string label, string value, void(*valueChangeCallback)(string), int maxLength = 50, int minLength = 0, string nameID = "notitle");
 	static unsigned int SetNameIDAndGenerateHash(string& nameID, GUIWindowNameIDType nameIDType);
 	static void PrepareAllForRendering();
 	static void UpdateAllPercentProperties();

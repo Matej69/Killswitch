@@ -2,8 +2,9 @@
 #include "GUITextbox.h"
 #include "GUIImage.h"
 #include "GUIInput.h"
+#include "GUIButton.h"
 
-GUIWindow::GUIWindow(string nameID, unsigned int guiWindowID, int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow* parentGUIWindow, GUIWindowType windowType)
+GUIWindow::GUIWindow(string nameID, unsigned int guiWindowID, int x, int y, int w, int h, MeasurementUnit posMUnit, MeasurementUnit sizeMUnit, bool hasParentGUIWindow, GUIWindow* parentGUIWindow, GUIWindowType windowType)
 	: x(x), y(y), sizeMUnit(sizeMUnit), posMUnit(posMUnit), nameID(nameID), hasParentGUIWindow(hasParentGUIWindow), parentGUIWindow(parentGUIWindow), guiWindowID(guiWindowID), windowType(windowType)
 {
 	SetSize(w, h);
@@ -127,6 +128,13 @@ GUIWindow* GUIWindow::CreateWindow(int x, int y, int w, int h, MeasurementUnit s
 	return GUIWindow::guiWindows.back();
 }
 
+GUIWindow * GUIWindow::CreateButton(int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow * parentGUIWindow, GUIWindowNameIDType nameIDType, string label, void(*clickedCallback)(), string nameID)
+{
+	unsigned int newHashedId = GUIWindow::SetNameIDAndGenerateHash(nameID, nameIDType);
+	GUIWindow::guiWindows.push_back(new GUIButton(nameID, newHashedId, x, y, w, h, sizeMUnit, posMUnit, hasParentGUIWindow, parentGUIWindow, label, clickedCallback));
+	return GUIWindow::guiWindows.back();
+}
+
 GUIWindow* GUIWindow::CreateTextbox(int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow * parentGUIWindow, GUIWindowNameIDType nameIDType, string textboxText, string nameID)
 {
 	unsigned int newHashedId = GUIWindow::SetNameIDAndGenerateHash(nameID, nameIDType);
@@ -141,28 +149,28 @@ GUIWindow* GUIWindow::CreateImage(int x, int y, int w, int h, MeasurementUnit si
 	return GUIWindow::guiWindows.back();
 }
 
-GUIWindow* GUIWindow::CreateInput(int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow * parentGUIWindow, GUIWindowNameIDType nameIDType, string label, int value, int maxLength, string nameID)
+GUIWindow* GUIWindow::CreateInput(int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow * parentGUIWindow, GUIWindowNameIDType nameIDType, string label, int value, void(*valueChangeCallback)(int), int maxValue, int minValue, string nameID)
 {
 	unsigned int newHashedId = GUIWindow::SetNameIDAndGenerateHash(nameID, nameIDType);
-	GUIWindow::guiWindows.push_back(new GUIInput<int>(nameID, newHashedId, x, y, w, h, sizeMUnit, posMUnit, hasParentGUIWindow, parentGUIWindow, label, value, maxLength));
+	GUIWindow::guiWindows.push_back(new GUIInput<int>(nameID, newHashedId, x, y, w, h, sizeMUnit, posMUnit, hasParentGUIWindow, parentGUIWindow, label, value, valueChangeCallback, maxValue, minValue));
 	return (GUIInput<int>*)GUIWindow::guiWindows.back();
 }
-GUIWindow* GUIWindow::CreateInput(int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow * parentGUIWindow, GUIWindowNameIDType nameIDType, string label, float value, int maxLength, string nameID)
+GUIWindow* GUIWindow::CreateInput(int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow * parentGUIWindow, GUIWindowNameIDType nameIDType, string label, float value, void(*valueChangeCallback)(float), int maxValue, int minValue, string nameID)
 {
 	unsigned int newHashedId = GUIWindow::SetNameIDAndGenerateHash(nameID, nameIDType);
-	GUIWindow::guiWindows.push_back(new GUIInput<float>(nameID, newHashedId, x, y, w, h, sizeMUnit, posMUnit, hasParentGUIWindow, parentGUIWindow, label, value, maxLength));
+	GUIWindow::guiWindows.push_back(new GUIInput<float>(nameID, newHashedId, x, y, w, h, sizeMUnit, posMUnit, hasParentGUIWindow, parentGUIWindow, label, value, valueChangeCallback, maxValue, minValue));
 	return (GUIInput<float>*)GUIWindow::guiWindows.back();
 }
-GUIWindow* GUIWindow::CreateInput(int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow * parentGUIWindow, GUIWindowNameIDType nameIDType, string label, double value, int maxLength, string nameID)
+GUIWindow* GUIWindow::CreateInput(int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow * parentGUIWindow, GUIWindowNameIDType nameIDType, string label, double value, void(*valueChangeCallback)(double), int maxValue, int minValue, string nameID)
 {
 	unsigned int newHashedId = GUIWindow::SetNameIDAndGenerateHash(nameID, nameIDType);
-	GUIWindow::guiWindows.push_back(new GUIInput<double>(nameID, newHashedId, x, y, w, h, sizeMUnit, posMUnit, hasParentGUIWindow, parentGUIWindow, label, value, maxLength));
+	GUIWindow::guiWindows.push_back(new GUIInput<double>(nameID, newHashedId, x, y, w, h, sizeMUnit, posMUnit, hasParentGUIWindow, parentGUIWindow, label, value, valueChangeCallback, maxValue, minValue));
 	return (GUIInput<double>*)GUIWindow::guiWindows.back();
 }
-GUIWindow* GUIWindow::CreateInput(int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow * parentGUIWindow, GUIWindowNameIDType nameIDType, string label, string value, int maxLength, string nameID)
+GUIWindow* GUIWindow::CreateInput(int x, int y, int w, int h, MeasurementUnit sizeMUnit, MeasurementUnit posMUnit, bool hasParentGUIWindow, GUIWindow * parentGUIWindow, GUIWindowNameIDType nameIDType, string label, string value, void(*valueChangeCallback)(string), int maxLength, int minLength, string nameID)
 {
 	unsigned int newHashedId = GUIWindow::SetNameIDAndGenerateHash(nameID, nameIDType);
-	GUIWindow::guiWindows.push_back(new GUIInput<string>(nameID, newHashedId, x, y, w, h, sizeMUnit, posMUnit, hasParentGUIWindow, parentGUIWindow, label, value, maxLength));
+	GUIWindow::guiWindows.push_back(new GUIInput<string>(nameID, newHashedId, x, y, w, h, sizeMUnit, posMUnit, hasParentGUIWindow, parentGUIWindow, label, value, valueChangeCallback, maxLength, minLength));
 	return (GUIInput<string>*)GUIWindow::guiWindows.back();
 }
 

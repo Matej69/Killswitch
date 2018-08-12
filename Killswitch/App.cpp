@@ -25,12 +25,7 @@ void window_size_callback(GLFWwindow* window, int w, int h)
 	WindowProperties::SetSize(w, h);
 	GUIWindow::UpdateAllPercentProperties();
 }
-void tst(string str) {
-	cout << str << endl;
-}
-void tst2(int str) {
-	cout << str << endl;
-}
+
 
 int main(void)
 {
@@ -67,19 +62,15 @@ int main(void)
 	Sprite sprite = Sprite(0.1f, 0.1f, 0.5f, 0.5f, "res/textures/larvitar.png");
 	Sprite sprite2 = Sprite(2.0f, 2.0f, 0.0f, 0.0f, "res/textures/larvitar.png");
 
-	/*
-	GUIWindow* p = GUIWindow::CreateWindow(0, 0, 100, 20, MeasurementUnit::PERCENT, MeasurementUnit::PERCENT, false, NULL, GUIWindowNameIDType::HAS_NAME_ID, "yolo");
-	for (int i = 0; i < 5; ++i)
-		GUIWindow::CreateWindow(i * 16, 2, 15, 15, MeasurementUnit::PERCENT, MeasurementUnit::PERCENT, true, p, GUIWindowNameIDType::NO_NAME_ID);
-	GUIWindow::CreateTextbox(0, 80, 100, 20, MeasurementUnit::PERCENT, MeasurementUnit::PERCENT, false, p, GUIWindowNameIDType::NO_NAME_ID, "neki jakooooo sexy text koji tu stoji burazzcccccccccccc ccccccccccccccccccccccccccccccccc cccccccccccccc sssssssssssssssssssssssssssssssssss ssssssss eeeeeeeeeeeee ffffffffffffffffff vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv v v vvvvvvvv zz jakooooo sexy text koji tu stoji burazzcccccccccccc ccccccccccccccccccccccccccccccccc cccccccccccccc sssssssssssssssssssssssssssssssssss ssssssss eeeeeeeeeeeee ffffffffffffffffff vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv v v vvvvvvvv zz jakooooo sexy text koji tu stoji burazzcccccccccccc ccccccccccccccccccccccccccccccccc cccccccccccccc sssssssssssssssssss", "12345");
-	GUIWindow::CreateImage(0, 0, 50, 50, MeasurementUnit::PERCENT, MeasurementUnit::PERCENT, false, p, GUIWindowNameIDType::NO_NAME_ID, "res/textures/larvitar.png", "12345");
-	*/
-	GUIInput<string>* ptr = (GUIInput<string>*)GUIWindow::CreateInput(0, 0, 20, 0, MeasurementUnit::PERCENT, MeasurementUnit::PIXELS, false, NULL, GUIWindowNameIDType::NO_NAME_ID, "mylabeeel", "tst", 10);
-	GUIInput<int>* ptr2 = (GUIInput<int>*)GUIWindow::CreateInput(0, 35, 20, 0, MeasurementUnit::PERCENT, MeasurementUnit::PIXELS, false, NULL, GUIWindowNameIDType::NO_NAME_ID, "mylabeeel", 12334567, 10);
-	ptr->valueChangeCallback = &tst;
-	ptr2->valueChangeCallback = &tst2;
-	//GUIWindow::CreateInput(100, 100, 50, 0, MeasurementUnit::PERCENT, MeasurementUnit::PIXELS, false, NULL, GUIWindowNameIDType::NO_NAME_ID, "mylabeel3", 123, 10);
-	//GUIWindow::CreateInput(200, 200, 50, 0, MeasurementUnit::PERCENT, MeasurementUnit::PIXELS, false, NULL, GUIWindowNameIDType::NO_NAME_ID, "mylabeel4", 123.0f, 10);
+	GUITextbox* p =  (GUITextbox*)GUIWindow::CreateTextbox(0, 0, 100, 0, MeasurementUnit::PERCENT, MeasurementUnit::PERCENT, false, NULL, GUIWindowNameIDType::NO_NAME_ID, "sadasdas das d");
+	
+	GUIWindow::CreateImage(25, 25, 60, 40, MeasurementUnit::PERCENT, MeasurementUnit::PERCENT, false, NULL, GUIWindowNameIDType::NO_NAME_ID, "res/textures/illidan.png");
+	GUIWindow::CreateButton(10, 55, 300, 100, MeasurementUnit::PERCENT, MeasurementUnit::PIXELS, false, NULL, GUIWindowNameIDType::NO_NAME_ID, "yolo boy", []() { cout << "yoloooooooo"; });
+	GUIWindow::CreateInput(0, 0, 100, 0, MeasurementUnit::PERCENT, MeasurementUnit::PERCENT, false, NULL, GUIWindowNameIDType::NO_NAME_ID, "mylabeeel", "tst", [](string s) { cout << s << endl; }, 10);
+	GUIWindow::CreateInput(0, 35, 20, 0, MeasurementUnit::PERCENT, MeasurementUnit::PERCENT, false, NULL, GUIWindowNameIDType::NO_NAME_ID, "mylabeeel", 12334.0, [](double d) { cout << d << endl; }, 5);
+	string s = "Neki super text Neki super textNeki super textNeki super text Neki super text Neki super text Neki super text Neki super textNeki super textNeki super text Neki super text Neki super textNeki super text Neki super textNeki super textNeki super text Neki super text Neki super textNeki super text Neki super textNeki super textNeki super text Neki super text Neki super textNeki super text Neki super textNeki super textNeki super text Neki super text Neki super textNeki super text Neki super textNeki super textNeki super text Neki super text Neki super textNeki super text Neki super textNeki super textNeki super text Neki super text Neki super textNeki super text Neki super textNeki super textNeki super text Neki super text Neki super textNeki super text Neki super textNeki super textNeki super text Neki super text Neki super textNeki super text Neki super textNeki super textNeki super text Neki super text Neki super textNeki super text Neki super textNeki super textNeki super text Neki super text Neki super textNeki super text Neki super textNeki super textNeki super text Neki super text Neki super textNeki super text Neki super textNeki super textNeki super text Neki super text Neki super textNeki super text Neki super textNeki super textNeki super text Neki super text Neki super textNeki super text Neki super textNeki super textNeki super text Neki super text Neki super textNeki super text Neki super textNeki super textNeki super text Neki super text Neki super text";
+	GUIWindow::CreateTextbox(10, 70, 80, 40, MeasurementUnit::PERCENT, MeasurementUnit::PERCENT, false, NULL, GUIWindowNameIDType::NO_NAME_ID, s);
+	
 
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(WindowProperties::glfwWindow))
@@ -91,9 +82,11 @@ int main(void)
 		/* Render here */
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		sprite.SetPosition(sprite.x + 0.0001f, sprite.y);
-		sprite.Render();
-		sprite2.Render();
+		//sprite.SetPosition(sprite.x + 0.0001f, sprite.y);
+		//sprite.Render();
+		//sprite2.Render();
+
+		p->text = to_string(GameClock::fps);
 
 		// imGUI rendering
 		GUIWindow::PrepareAllForRendering();
